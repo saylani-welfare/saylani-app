@@ -13,12 +13,13 @@ const store = configureStore();
 
 injectTapEventPlugin();
 
+// Initialize Firebase
 var config = {
-    apiKey: "<API_KEY>",
-    authDomain: "<PROJECT_ID>.firebaseapp.com",
-    databaseURL: "https://<DATABASE_NAME>.firebaseio.com",
-    storageBucket: "<BUCKET>.appspot.com",
-    messagingSenderId: "<SENDER_ID>",
+  apiKey: "AIzaSyAHsz75eNzyRKVOriUl9eX6xiniuEXfHRo",
+  authDomain: "saylani-app.firebaseapp.com",
+  databaseURL: "https://saylani-app.firebaseio.com",
+  storageBucket: "saylani-app.appspot.com",
+  messagingSenderId: "1037270143104"
 };
 
 firebase.initializeApp(config);

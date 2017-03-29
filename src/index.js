@@ -1,12 +1,21 @@
 import React from 'react';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import firebase from 'firebase';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import {App} from './components';
+import { App, AppBarExampleIcon, Main, Addfamily, AddChild } from './components';
 import './index.css';
+
+
 import configureStore from './store/configureStore';
+
+import {
+  Router,
+  Route,
+  IndexRoute,
+  browserHistory
+} from 'react-router';
 
 
 const store = configureStore();
@@ -27,7 +36,17 @@ firebase.initializeApp(config);
 ReactDOM.render(
   <MuiThemeProvider>
     <Provider store={store}>
-      <App />
+
+      <Router history={browserHistory}>
+        <Route path="/" component={AppBarExampleIcon} >
+          <IndexRoute component={App} />
+          <Route path="/main" component={Main} />
+          <Route path="/addfamily" component={ Addfamily } />
+        <Route path="/addchild" component={ AddChild } />
+        </Route>
+
+      </Router>
+
     </Provider>
   </MuiThemeProvider>,
   document.getElementById('root')

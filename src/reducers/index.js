@@ -1,7 +1,11 @@
 import {combineReducers} from 'redux';
-import exampleReducer from './exampleReducer';
+import {isLoggingReducer, loginDataReducer, loginStatusReducer, loginErrorReducer} from './authReducer';
 
 const rootReducer = combineReducers({
-    example: exampleReducer
+    isLogging: isLoggingReducer,
+    isLoggedIn: loginStatusReducer,
+    loginData: loginDataReducer,
+    loginError: loginErrorReducer
 });
+
 export default rootReducer;

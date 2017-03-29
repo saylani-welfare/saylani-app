@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import firebase from 'firebase';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { App, AppBarExampleIcon, Main } from './components';
+import { App, Main, Login } from './components';
 import './index.css';
 
 
@@ -38,8 +38,8 @@ ReactDOM.render(
     <Provider store={store}>
 
       <Router history={browserHistory}>
-        <Route path="/" component={AppBarExampleIcon} >
-          <IndexRoute component={App} />
+        <Route path="/" component={App} >
+          <IndexRoute component={Login} />
           <Route path="/main" component={Main} />
         </Route>
 

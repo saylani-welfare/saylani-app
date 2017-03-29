@@ -1,75 +1,50 @@
 import React, { Component } from 'react';
-import AppBar from 'material-ui/AppBar';
-import FlatButton from 'material-ui/FlatButton';
 import './App.css';
-
-
-import TextField from 'material-ui/TextField';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {loginData, isLoggedIn} from '../../actions/auth';
 import {browserHistory} from 'react-router';
-import Paper from 'material-ui/Paper';
-import RaisedButton from 'material-ui/RaisedButton';
+import {Header} from '../';
 import firebase from 'firebase';
+
 
 
 class App extends Component {
 
-  login(e){
-    e.preventDefault();
-    var email = this.refs.email.getValue();
-    var pass = this.refs.pass.getValue();
-    var demo = this.refs.demo;
-    
-    firebase.auth().signInWithEmailAndPassword(email, pass)
-    .then((result) => { 
-      console.log("successful");
-       browserHistory.push('/main');
-   
-  })
-      
-      .catch(function(error) {
+  componentDidMount(){
 
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      demo.innerHTML = errorMessage;
+    firebase.auth().onAuthStateChanged((user) => {
+
+      if (user) {
+          // User is signed in.
+          this.props.setLoginData(user);
+          this.props.isLoggedIn(true);
+          browserHistory.replace('/main');
+      } else {
+          // User is signed out.
+          this.props.setLoginData(null);
+          this.props.isLoggedIn(false);
+          browserHistory.replace('/');
+      }
+      console.log("is logged in", this.props.loginStatus);
     });
-
-
   }
-  
   render() {
-    const style = {
-  height: 340,
-  width: 400,
-  margin: 20,
-  textAlign: 'center',
-  display: 'inline-block',
-};
+
     return (
       <div className="App">
-        <br /><br /><br /><br />
-
-         <Paper style={style} zDepth={2} >
-
-           <h1>Admin Login</h1>
-           
-           <p ref="demo"> email: admin@saylani.com  pass: saylani123 <br /> </p>
-            <TextField
-                  hintText="Email"
-                  floatingLabelText="Email" ref="email"
-                /><br />
-            <TextField
-              hintText="Password Field"
-              floatingLabelText="Password"  ref="pass"
-              type="password"
-            /><br />
-
-            <RaisedButton backgroundColor="#316dc3" label="Login" primary={true} style={{margin: 12}} onClick={this.login.bind(this)} />
+        <Header />
+        
+        {this.props.children}
          
-         </Paper>
-      
       </div>
     );
   }
 }
-
-export default App;
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({setLoginData: loginData, isLoggedIn}, dispatch);
+}
+function mapStateToProps({isLoggedIn}){
+  return {loginStatus: isLoggedIn};
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);

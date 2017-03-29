@@ -1,29 +1,19 @@
 import React, { Component } from 'react';
-// import AppBar from 'material-ui/AppBar';
-// import FlatButton from 'material-ui/FlatButton';
-// import DropDownMenu from 'material-ui/DropDownMenu';
-// import MenuItem from 'material-ui/MenuItem';
-
 import TextField from 'material-ui/TextField';
-// import {browserHistory} from 'react-router';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-// import firebase from 'firebase';
-
 
 class Main extends Component {
-
-
 
   render() {
 
     const style = {
-  height: 270,
-  width: 400,
-  margin: 20,
-  textAlign: 'center',
-  display: 'inline-block',
-};
+      height: 270,
+      width: 400,
+      margin: 20,
+      textAlign: 'center',
+      display: 'inline-block',
+    };
 
 
     return (

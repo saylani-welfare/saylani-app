@@ -9,7 +9,7 @@ class Header extends React.Component {
     render() {
         return (
             <AppBar
-                title={<div style={{"textAlign":"center"}}>Saylani App</div>}
+                title={<div style={{paddingLeft: "75px"}}>Saylani App</div>}
                 iconStyleLeft={{ "display": "none" }} style={{ "backgroundColor": "#316dc3" }}
                 iconElementRight={<FlatButton style={{"visibility":this.props.isLoggedIn === true ? "visible": "hidden"}} label="Logout" onClick={this.props.logout} /> }
             />

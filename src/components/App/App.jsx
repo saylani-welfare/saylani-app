@@ -19,7 +19,9 @@ class App extends Component {
           // User is signed in.
           this.props.setLoginData(user);
           this.props.isLoggedIn(true);
-          browserHistory.replace('/main');
+          if(window.location.pathname === "/"){
+            browserHistory.replace('/main');
+          }
       } else {
           // User is signed out.
           this.props.setLoginData(null);

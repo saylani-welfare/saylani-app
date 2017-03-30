@@ -2,9 +2,19 @@ import {
     IS_ADDING_FAMILY,
     IS_FAMILY_ADDED,
     IS_SEARCHING_FAMILY,
-    CURRENT_FAMILY
+    CURRENT_FAMILY,
+    FAMILY_ERROR,
+    SEARCH_ERROR
 } from '../actions/family';
 
+export function searchErrorReducer(state = {message: null}, action){
+    switch(action.type){
+        case SEARCH_ERROR:
+            return action.error;
+        default:
+            return state;
+    }
+}
 export function currentFamilyReducer(state = null, action){
     switch(action.type){
         case CURRENT_FAMILY:
@@ -33,6 +43,14 @@ export function isSearchingFamilyReducer(state = false ,action){
     switch(action.type){
         case IS_SEARCHING_FAMILY:
             return action.isSearchingFamily;
+        default:
+            return state;
+    }
+}
+export function familyErrorReducer(state = {message: null}, action){
+    switch(action.type){
+        case FAMILY_ERROR:      
+            return action.error
         default:
             return state;
     }

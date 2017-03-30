@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import Paper from 'material-ui/Paper';
+import {Link} from 'react-router';
 import RaisedButton from 'material-ui/RaisedButton';
 
 class Main extends Component {
@@ -14,7 +15,9 @@ class Main extends Component {
       textAlign: 'center',
       display: 'inline-block',
     };
-
+    const inheritedStyles= {
+      color:"inherit",textDecoration:"inherit"
+    }
 
     return (
     
@@ -40,9 +43,11 @@ class Main extends Component {
         <RaisedButton label="Search" primary={true} style={{ margin: 12 }} />
         <br /><br />
         
-        <RaisedButton label="Add Family" primary={true} style={{ margin: 12 }} />
+        <Link to="/addFamily">
+          <RaisedButton label="Add Family" primary={true} style={{ margin: 12 }} />
+        </Link>
         
-        <RaisedButton label="Add Child" primary={true} style={{ margin: 12 }} />
+        <RaisedButton label="Add Child" primary={true} style={inheritedStyles} />
         
 
           </Paper>

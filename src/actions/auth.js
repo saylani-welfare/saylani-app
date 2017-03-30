@@ -6,6 +6,7 @@ export const IS_LOGGING_IN = "IS_LOGGING_IN";
 export const LOGIN_DATA  = "LOGIN_DATA";
 export const LOGIN_ERROR = "LOGIN_ERROR";
 // sets the isLoggedIn
+
 export function isLoggedIn(isLoggedIn){
     return {
         type: LOGIN_STATUS,
@@ -35,8 +36,6 @@ export function logout(){
     return (dispatch) => {
         firebase.auth().signOut().then(function () {
             console.log("Sign-out successful");
-            dispatch(isLoggedIn(false));
-            dispatch(loginData(null));
             browserHistory.replace('/');
         }).catch(function (error) {
             dispatch(loginError(error));
@@ -50,7 +49,6 @@ export function login(email, pw){
         firebase.auth().signInWithEmailAndPassword(email, pw)
         .then((result) => { 
             console.log("login successful");
-            dispatch(isLoggedIn(true));
             dispatch(isLoggingIn(false));//set it to false so loader gets hidden
             browserHistory.push('/main');
         })

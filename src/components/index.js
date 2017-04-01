@@ -6,6 +6,8 @@ export {default as Login} from './Login/Login.jsx';
 export {default as AddFamily} from './AddFamily/AddFamily.jsx';
 export {default as FamilyInfo} from './FamilyInfo/FamilyInfo.jsx';
 export {default as AddChild} from './AddChild/AddChild.jsx';
+export {default as Loader} from './Loader/Loader.jsx';
+export {default as ChildInfo} from './ChildInfo/ChildInfo.jsx';
 
 
 

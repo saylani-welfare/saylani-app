@@ -28,7 +28,7 @@ class App extends Component {
           this.props.isLoggedIn(false);
           browserHistory.replace('/');
       }
-      console.log("is logged in", this.props.loginStatus);
+      console.log("is logged in: ", this.props.loginStatus);
     });
   }
   render() {

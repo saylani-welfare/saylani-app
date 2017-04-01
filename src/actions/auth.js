@@ -35,7 +35,7 @@ export function loginData(loginData){
 export function logout(){
     return (dispatch) => {
         firebase.auth().signOut().then(function () {
-            console.log("Sign-out successful");
+            console.log("sign out successful");
             browserHistory.replace('/');
         }).catch(function (error) {
             dispatch(loginError(error));
@@ -45,11 +45,11 @@ export function logout(){
 export function login(email, pw){
     return (dispatch) => {
         
-        dispatch(isLoggingIn(true));// set it to true so we can show a loader
+        dispatch(isLoggingIn(true));
         firebase.auth().signInWithEmailAndPassword(email, pw)
         .then((result) => { 
             console.log("login successful");
-            dispatch(isLoggingIn(false));//set it to false so loader gets hidden
+            dispatch(isLoggingIn(false));
             browserHistory.push('/main');
         })
         .catch((error) => {

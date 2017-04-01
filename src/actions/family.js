@@ -1,12 +1,13 @@
 import firebase from 'firebase';
 import {browserHistory} from 'react-router';
-
 export const IS_ADDING_FAMILY = "IS_ADDING_FAMILY";
 export const IS_FAMILY_ADDED = "IS_FAMILY_ADDED";
 export const IS_SEARCHING_FAMILY = "IS_SEARCHING_FAMILY";
 export const CURRENT_FAMILY = "CURRENT_FAMILY";
 export const FAMILY_ERROR = "FAMILY_ERROR";
 export const SEARCH_ERROR = "SEARCH_ERROR";
+export const CURRENT_CHILDREN_LIST = "CURRENT_CHILDREN_LIST";
+export const FETCHING_CHILDREN_LIST = "FETCHING_CHILDREN_LIST";
 
 export function searchError(error){
     return {
@@ -14,13 +15,23 @@ export function searchError(error){
         error
     }
 }
-
+export function currentChildrenList(list){
+    return {
+        type: CURRENT_CHILDREN_LIST,
+        list
+    }
+}
+export function fetchingChildrenList(fetchingChildrenList){
+    return {
+        type: FETCHING_CHILDREN_LIST,
+        fetchingChildrenList
+    }
+}
 export function currentFamily(family){
     if(family != null){
         browserHistory.push('/'+family.id);
     }
     
-    console.log(family);
     return {
         type: CURRENT_FAMILY,
         currentFamily: family
@@ -48,6 +59,29 @@ export function isSearchingFamily(isSearchingFamily){
     return {
         type: IS_SEARCHING_FAMILY,
         isSearchingFamily
+    }
+}
+export function fetchChildrenList(familyId){
+    return (dispatch) => {
+        dispatch(fetchingChildrenList(true));
+        const childrenRef = firebase.database().ref('children');
+        childrenRef.once('value')
+        .then((snapshot) => {
+            const list = snapshot.val();
+            let arr = [];
+            for(let childId in list){
+                const child = list[childId];
+                if(child.familyId === familyId){
+                    arr.push(child);
+                }
+            }
+            dispatch(fetchingChildrenList(false));
+            dispatch(currentChildrenList(arr));
+        })
+        .catch((error) => {
+            dispatch(fetchingChildrenList(false));
+            dispatch(currentChildrenList([]));
+        });
     }
 }
 export function searchFamily(id){

@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
-import AppBar from 'material-ui/AppBar';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {addChild} from '../../actions/child';
 
 const style = {
-  height: 600,
+  paddingBottom: "20px",
   width: 400,
   margin: 60,
   textAlign: 'center',
@@ -20,6 +22,7 @@ class AddChild extends Component {
 
     this.state = {
       controlledDate: null,
+      gender: "male"
     };
   }
 
@@ -28,60 +31,104 @@ class AddChild extends Component {
       controlledDate: date,
     });
   }
+  add(e){
+    e.preventDefault();
+    const name = this.inputChildName.value;
+    const id = this.inputChildId.value;
+    const dob = this.state.controlledDate.toLocaleDateString();
+    const className = this.inputClass.value;
+    const madarssa = this.inputMadarssa.value;
+    const gender = this.state.gender;
+    const familyId = this.props.params.familyId;
+    if(name && id && dob && className && madarssa){
+      const child = {
+        id, 
+        familyId,
+        name, 
+        gender,
+        dob,
+        class: className,
+        madarssa
+      };
+      this.props.addChild(child, true);
+    }
+  }
+  handleGenderChange(e, value){
+    this.setState({gender: value});
+  }
   render() {
-
+    
     return (
-      <div className="App">
+      <div>
         <Paper style={style} zDepth={2} >
           <h2>Add Children </h2>
+          <form onSubmit={(e) => {this.add(e)}}>
+
+          <TextField
+            type="number"
+            disabled={true}
+            value={this.props.params.familyId}
+            floatingLabelText="Family ID"
+          />
           <TextField
             hintText="Enter child ID"
             type="number"
+            ref={el => this.inputChildId = el && el.input}
             floatingLabelText="Child ID"
+            required
           /><br />
           <TextField
             hintText="Enter child name"
             type="text"
+            ref={el => this.inputChildName = el && el.input}
             floatingLabelText="Child Name"
+            required
           /><br />
-
-          <TextField
-            hintText="Enter gender"
-            type="text"
-            floatingLabelText="Gender"
-          /><br /><br />
+         <div style={{textAlign : "left", padding:"0px 70px"}}>   
+        <RadioButtonGroup name="gender" onChange={(e, newS) => this.handleGenderChange(e, newS)} defaultSelected="male">
+          <RadioButton label="Male" value="male" style={{paddingTop:"10px"}}/>
+          <RadioButton label="Female" value="female" style={{paddingTop:"10px"}}/>
+        </RadioButtonGroup>
+          </div> 
+        <br />
           <DatePicker
             hintText="Date of Birth"
             value={this.state.controlledDate}
             onChange={this.handleChange}
+            required
           />
           <TextField
             hintText="Enter class"
             type="text"
+            ref={el => this.inputClass = el && el.input}
             floatingLabelText="Class"
+            required
           /><br />
           <TextField
             hintText="Enter Madarssa"
             type="text"
+            ref={el => this.inputMadarssa = el && el.input}
             floatingLabelText="Madarssa"
+            required
           /><br />
           <br />
+          <p style={{color:"red"}}>{this.props.childError && this.props.childError.message}</p>
           <RaisedButton
-            label="Save"
+            label="Add"
             labelPosition="before"
             primary={true}
+            type="submit"
           />
-          <Link to="/main">
-            <RaisedButton
-              label="Back to main"
-              labelPosition="before"
-              primary={true}
-            />
-          </Link>
+          </form>
         </Paper>
       </div>
     );
   }
 }
-
-export default AddChild;
+function mapStateToProps(state){
+  return {childError : state.childError};
+}
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({addChild},dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(AddChild);

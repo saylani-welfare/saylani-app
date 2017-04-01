@@ -4,7 +4,8 @@ import {
     IS_SEARCHING_FAMILY,
     CURRENT_FAMILY,
     FAMILY_ERROR,
-    SEARCH_ERROR
+    SEARCH_ERROR,
+    CURRENT_CHILDREN_LIST
 } from '../actions/family';
 
 export function searchErrorReducer(state = {message: null}, action){
@@ -51,6 +52,14 @@ export function familyErrorReducer(state = {message: null}, action){
     switch(action.type){
         case FAMILY_ERROR:      
             return action.error
+        default:
+            return state;
+    }
+}
+export function currentChildrenListReducer(state = [], action){
+    switch(action.type){
+        case CURRENT_CHILDREN_LIST:
+            return action.list;
         default:
             return state;
     }
